@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import RegisterForm from './components/forms/RegistrationForm';
 
 class App extends Component {
   render() {
     return (
-      <div style={{margin: '2% 20% 0 0'}}>
-        <RegisterForm />
-      </div>
+      <Router>
+        <Route exact path="/" component={RegisterForm} />
+        <Route exact path="/clients" component={RegisterForm} />
+        <Route exact path="/accounting" component={RegisterForm} />
+      </Router>
     );
   }
 }
