@@ -87,52 +87,51 @@ export class RegistrationForm extends React.Component {
     );
 
     return (
-      <div style={{margin: '5% 10% 0 0'}}>
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-          <Form.Item
-            label="公司名称"
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="公司商号"
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="联系电话"
-          >
-            {getFieldDecorator('phone', {
-              rules: [{ required: true, message: '请输入手机号' }],
-            })(
-              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-            )}
-          </Form.Item>
-          <Form.Item
-            label="微信号"
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="员工姓名"
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="工作时长"
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="工资总额"
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">提交</Button>
-          </Form.Item>
-        </Form>
-      </div>
+      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form.Item
+          label="公司名称（Legal name）： Boiling Crab and Crawfish Inc"
+        >
+        </Form.Item>
+        <Form.Item
+          label="公司招牌名字（DBA）： Shaking Crab"
+        >
+        </Form.Item>
+        <Form.Item
+          label="公司税号: XXXXXXX"
+        >
+        </Form.Item>
+        <Form.Item
+          label="联系信息: Eddie(678-XXX-XXXX)"
+        >
+        </Form.Item>
+        <Form.Item
+          label="微信号: XXXX"
+        >
+        </Form.Item>
+        <Form.Item
+          label="员工姓名"
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="工作时长"
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="工资总额"
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="小费总额"
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">提交</Button>
+        </Form.Item>
+      </Form>
     );
   }
 }
