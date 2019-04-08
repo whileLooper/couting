@@ -89,24 +89,29 @@ export class RegistrationForm extends React.Component {
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item
-          label="公司名称（Legal name）： Boiling Crab and Crawfish Inc"
+          label="公司名称(Legal name)"
         >
+           Boiling Crab and Crawfish Inc
         </Form.Item>
         <Form.Item
-          label="公司招牌名字（DBA）： Shaking Crab"
+          label="公司招牌名字(DBA)"
         >
+         Shaking Crab
         </Form.Item>
         <Form.Item
-          label="公司税号: XXXXXXX"
+          label="公司税号"
         >
+          XXXXXXX
         </Form.Item>
         <Form.Item
-          label="联系信息: Eddie(678-XXX-XXXX)"
+          label="联系信息"
         >
+          Eddie(678-XXX-XXXX)
         </Form.Item>
         <Form.Item
-          label="微信号: XXXX"
+          label="微信号"
         >
+          XXXX
         </Form.Item>
         <Form.Item
           label="员工姓名"
