@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Divider,
 } from 'antd';
+import EmployeeForm from './AddEmployee';
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -113,26 +114,7 @@ export class RegistrationForm extends React.Component {
         >
           XXXX
         </Form.Item>
-        <Form.Item
-          label="员工姓名"
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="工作时长"
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="工资总额"
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="小费总额"
-        >
-          <Input />
-        </Form.Item>
+        <EmployeeForm />
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">提交</Button>
         </Form.Item>
