@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import RegisterForm from './components/forms/RegistrationForm';
 
-
 class App extends Component {
   render() {
     return (
