@@ -9,13 +9,13 @@ class App extends Component {
       <Router>
         <Row style={{height: '4vw'}}></Row>
         <Row  type="flex" justify="space-around" align="middle">
-          <Col xs={2} sm={4} md={4} lg={5} xl={5}></Col>
-          <Col xs={20} sm={16} md={16} lg={14} xl={14}>
+          <Col xs={1} sm={3} md={4} lg={5} xl={5}></Col>
+          <Col xs={22} sm={18} md={16} lg={14} xl={14}>
             <Route exact path="/" component={RegisterForm} />
             <Route exact path="/clients" component={RegisterForm} />
             <Route exact path="/accounting" component={RegisterForm} />
           </Col>
-          <Col xs={2} sm={4} md={4} lg={5} xl={5}></Col>
+          <Col xs={1} sm={3} md={4} lg={5} xl={5}></Col>
         </Row>
       </Router>
     );
