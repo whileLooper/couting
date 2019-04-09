@@ -71,6 +71,8 @@ export default class EmployeeForm extends React.Component {
 
   render() {
     const { employeeList } = this.state;
+    this.props.firebase.companies();
+
     return (
       <div>
         <Row type="flex" justify="space-between">
