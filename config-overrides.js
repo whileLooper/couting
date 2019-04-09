@@ -1,5 +1,5 @@
 const path = require('path');
-const { override, fixBabelImports, addLessLoader } = require('customize-cra');
+const { override, fixBabelImports, addLessLoader, addWebpackAlias } = require('customize-cra');
 
 const PATHS = {
   app: path.resolve(__dirname, './src/index.js'),
@@ -18,19 +18,8 @@ module.exports = override(
     javascriptEnabled: true,
     modifyVars: { '@primary-color': '#1DA57A' },
   }),
+  addWebpackAlias({
+    Component: PATHS.components,
+    Services: PATHS.services,
+  }),
 );
-
-module.exports = {
-  // The Webpack config to use when compiling your react app for development or production.
-  webpack: (config, env) => {
-    // ...add your webpack config
-    config.resolve =  {
-      extensions: ['.js', '.jsx'],
-      alias: {
-        Component: PATHS.components,
-        Services: PATHS.services,
-      }
-    };
-    return config;
-  },
-}
