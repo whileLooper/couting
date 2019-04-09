@@ -1,8 +1,10 @@
 import React from 'react';
 import {
-  Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Divider,
-} from 'antd';
+  // eslint-disable-next-line
+  Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Divider, 
+} from 'antd'; 
 import EmployeeForm from './AddEmployee';
+import { FirebaseContext } from 'Component/Firebase';
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -114,7 +116,9 @@ export class RegistrationForm extends React.Component {
         >
           XXXX
         </Form.Item>
-        <EmployeeForm />
+        <FirebaseContext.Consumer>
+          {(firebase) => <EmployeeForm firebase={firebase} />}
+        </FirebaseContext.Consumer>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">提交</Button>
         </Form.Item>

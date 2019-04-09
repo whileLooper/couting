@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/firebase-firestore';
 import 'firebase/auth';
 // Initialize Firebase
-var config = {
+export const config = {
     apiKey: "AIzaSyCQ1ADMKQ0kmQAmhpjZEuKvpuKjd_uzcvM",
     authDomain: "easyaccouting-38d07.firebaseapp.com",
     databaseURL: "https://easyaccouting-38d07.firebaseio.com",
@@ -11,5 +11,5 @@ var config = {
     storageBucket: "easyaccouting-38d07.appspot.com",
     messagingSenderId: "378184926337"
 };
-firebase.initializeApp(config);
+
 export default firebase;
