@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Row, Col } from 'antd';
 import RegisterForm from './components/forms/RegistrationForm';
 
 class App extends Component {
   render() {
     return (
-      <div style={{margin: '2% 20% 0 0'}}>
-        <RegisterForm />
-      </div>
+      <Router>
+        <Row style={{height: '4vw'}}></Row>
+        <Row  type="flex" justify="space-around" align="middle">
+          <Col xs={1} sm={3} md={4} lg={5} xl={5}></Col>
+          <Col xs={22} sm={18} md={16} lg={14} xl={14}>
+            <Route exact path="/" component={RegisterForm} />
+            <Route exact path="/clients" component={RegisterForm} />
+            <Route exact path="/accounting" component={RegisterForm} />
+          </Col>
+          <Col xs={1} sm={3} md={4} lg={5} xl={5}></Col>
+        </Row>
+      </Router>
     );
   }
 }
