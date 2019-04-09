@@ -10,6 +10,14 @@ export default class EmployeeForm extends React.Component {
       employeeList: [],
     };
   }
+
+  componentDidMount = () => {
+    const { employeeList } = this.state;
+    employeeList.push(this.newRow());
+    this.setState({
+      employeeList: employeeList,
+    });
+  }
   
   newRow = () => {
     const { employeeList } = this.state;
