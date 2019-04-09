@@ -58,7 +58,7 @@ export default class EmployeeForm extends React.Component {
         <Row type="flex" justify="space-between">
           <Col span={9}>姓名</Col>
           <Col span={5}>工时</Col>
-          <Col span={5}>工资</Col>
+          <Col span={5}>底薪</Col>
           <Col span={5}>小费</Col>
           {/* <Col span={4}>总额</Col> */}
         </Row>
