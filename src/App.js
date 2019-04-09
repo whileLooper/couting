@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Row, Col } from 'antd';
-import RegisterForm from './components/forms/RegistrationForm';
+import RegisterForm from 'Component/forms/RegistrationForm';
 
 class App extends Component {
   render() {
