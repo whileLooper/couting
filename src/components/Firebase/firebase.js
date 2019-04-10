@@ -25,9 +25,7 @@ class Firebase {
     })
   });
 
-  submitForm = (input) => this.db.ref('/companies').set({
-    // mapping different input properties
-  });
+  submitForm = (formValues) => this.db.collection('payrolls').doc('companyID1').set(formValues);
 
   getFormByComponent = (componentId) => this.db.ref(`/companies/${componentId}`);
 }
