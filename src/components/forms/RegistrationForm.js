@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  // eslint-disable-next-line
-  Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Divider, 
-} from 'antd'; 
+import { Form, message, Button } from 'antd'; 
 import EmployeeForm from './AddEmployee';
-
-const { Option } = Select;
 
 export class RegistrationForm extends React.Component {
 
@@ -19,8 +14,16 @@ export class RegistrationForm extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const formValue = this.formatFormValue(values);
-        // dispath firebase set data function here
-        this.props.firebase.submitForm(formValue);
+        this.props.firebase.submitForm(formValue)
+        .then(function() {
+            message.success('成功啦！表格提交成功！');
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+        })
+        .catch(function(error) {
+          message.error("出问题啦，请重新提交，或者联系我们", error);
+        });;
       }
     });
   }
