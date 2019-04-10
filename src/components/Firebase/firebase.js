@@ -1,6 +1,5 @@
 import app from 'firebase/app';
 import 'firebase/auth';
-// eslint-disable-next-line no-unused-vars
 import * as firebase from 'firebase';
 
 const config = {
@@ -16,11 +15,15 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
     this.auth = app.auth();
-    this.db = app.database();
+    this.db = app.firestore();
   }
 
   // create api here
-  companies = () => this.db.ref('/companies');
+  companies = (componentId) => this.db.collection('companies').get().then(snapshot => {
+    snapshot.forEach(doc => {
+      console.log(doc.id, '=>', doc.data());
+    })
+  });
 
   submitForm = (input) => this.db.ref('/companies').set({
     // mapping different input properties
