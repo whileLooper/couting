@@ -71,7 +71,38 @@ export default class EmployeeForm extends React.Component {
 
   render() {
     const { employeeList } = this.state;
-    this.props.firebase.companies();
+    const length = employeeList.length;
+    const { getFieldDecorator } = this.props.form;
+
+    const employeeRows = employeeList.map((id) => (
+      <Row
+        key={id}
+        style={{ marginBottom: "10px" }}
+        gutter={4}
+        type="flex"
+        justify="space-between"
+      >
+        <Col span={2}>
+          {length <= 1 ? null : <Button
+            id={id}
+            type="danger"
+            shape="circle"
+            icon="minus"
+            size="small"
+            onClick={(event) => this.handleDeleteEmployee(event)}
+          />}
+        </Col>
+        <Col span={8}>
+          {getFieldDecorator(`${id}_name`, {})(<Input placeholder="员工姓名" />)}
+        </Col>
+        <Col span={7}>
+          {getFieldDecorator(`${id}_baseSalary`, {})( <Input placeholder="底薪" /> )}
+        </Col>
+        <Col span={7}>
+          {getFieldDecorator(`${id}_baseTips`, {})(<Input placeholder="小费" />)}
+        </Col>
+      </Row>
+    ));
 
     return (
       <div>
