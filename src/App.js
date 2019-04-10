@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Row, Col } from 'antd';
 import RegisterForm from 'Component/forms/RegistrationForm';
+import AccountingPage from 'Component/forms/AccountingPage';
 import { FirebaseContext } from 'Component/Firebase';
 
 class App extends Component {
