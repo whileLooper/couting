@@ -4,12 +4,11 @@ import {
   Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Divider, 
 } from 'antd'; 
 import EmployeeForm from './AddEmployee';
-import { FirebaseContext } from 'Component/Firebase';
 
 const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 export class RegistrationForm extends React.Component {
+
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
@@ -20,8 +19,8 @@ export class RegistrationForm extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const formValue = this.formatFormValue(values);
-        console.log('Received values of form: ', formValue);
         // dispath firebase set data function here
+        this.props.firebase.submitForm(formValue);
       }
     });
   }
@@ -37,6 +36,7 @@ export class RegistrationForm extends React.Component {
         baseTips: values[`employee_${index}_baseTips`],
       }
     });
+    return employeeMap;
   }
 
   render() {
@@ -90,9 +90,7 @@ export class RegistrationForm extends React.Component {
         >
           XXXX
         </Form.Item>
-        <FirebaseContext.Consumer>
-          {(firebase) => <EmployeeForm {...this.props} firebase={firebase} />}
-        </FirebaseContext.Consumer>
+        <EmployeeForm {...this.props} />
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">提交</Button>
         </Form.Item>

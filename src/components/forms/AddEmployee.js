@@ -57,7 +57,6 @@ export default class EmployeeForm extends React.Component {
     const { employeeList } = this.state;
     const length = employeeList.length;
     const { getFieldDecorator } = this.props.form;
-    // this.props.firebase.companies();
 
     const employeeRows = employeeList.map((id) => (
       <Row
