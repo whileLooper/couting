@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Row, Col } from 'antd';
 import RegisterForm from 'Component/forms/RegistrationForm';
+import AccountingPage from 'Component/forms/AccountingPage';
 
 class App extends Component {
   render() {
@@ -13,7 +14,7 @@ class App extends Component {
           <Col xs={22} sm={18} md={16} lg={14} xl={14}>
             <Route exact path="/" component={RegisterForm} />
             <Route exact path="/clients" component={RegisterForm} />
-            <Route exact path="/accounting" component={RegisterForm} />
+            <Route exact path="/accounting" component={AccountingPage} />
           </Col>
           <Col xs={1} sm={3} md={4} lg={5} xl={5}></Col>
         </Row>
