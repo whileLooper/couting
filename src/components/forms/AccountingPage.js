@@ -1,121 +1,78 @@
 import React from 'react';
 import {
-  Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Divider,Table
+  Form,Table, Badge, Menu, Dropdown, Icon
 } from 'antd';
 
 export class AccountingPage extends React.Component {
-
+  
 
   render() {
-    const columns = [{
-        title: '公司名称(Legal name)',
-        dataIndex: 'legal_name',
-        key: 'legal_name',
-      }, {
-        title: '公司招牌名字(DBA)',
-        dataIndex: 'dba',
-        key: 'dba',
-        // width: '12%',
-      }, {
-        title: '公司税号',
-        dataIndex: 'taxNum',
-        // width: '30%',
-        key: 'taxNum',
-      }, {
-        title: '联系信息',
-        dataIndex: 'contact',
-        key: 'contact',
-        // width: '12%',
-      }, {
-        title: '微信号',
-        dataIndex: 'weChat',
-        key: 'weChat',
-        // width: '12%',
-      } 
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          Action 1
+        </Menu.Item>
+        <Menu.Item>
+          Action 2
+        </Menu.Item>
+      </Menu>
+    );
+
+    const expandedRowRender = () => {
+      const columns = [
+        { title: '姓名', dataIndex: 'name', key: 'name' },
+        { title: '底薪', dataIndex: 'baseSalary', key: 'baseSalary' },
+        { title: '小费', dataIndex: 'tips', key: 'tips' },
+      ];
+  
+      const data = [];
+      for (let i = 0; i < 3; ++i) {
+        data.push({
+          key: i,
+          name: 'John Doe',
+          baseSalary: '123.00',
+          tips: '59.05',
+        });
+      }
+      return (
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+        />
+      );
+    };
+
+    const columns = [
+      { title: '公司名称(Legal name)', dataIndex: 'legalName', key: 'legalName' },
+      { title: '公司招牌名字(DBA)', dataIndex: 'dba', key: 'dba' },
+      { title: '公司税号', dataIndex: 'taxNum', key: 'taxNum' },
+      { title: '联系信息', dataIndex: 'contact', key: 'contact' },
+      { title: '微信号', dataIndex: 'wechat', key: 'chat' },
+      { title: 'Status', key: 'state', render: () => <span><Badge status="success" />Finished</span> },
     ];
 
-    const childColums = [{
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-      }, {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-        width: '12%',
-      }, {
-        title: 'Address',
-        dataIndex: 'address',
-        width: '30%',
-        key: 'address',
-      }];
-      
-      const data = [{
-        key: 1,
-        name: 'John Brown sr.',
-        age: 60,
-        address: 'New York No. 1 Lake Park',
-        children: [{
-          key: 11,
-          name: 'John Brown',
-          age: 42,
-          address: 'New York No. 2 Lake Park',
-        }, {
-          key: 12,
-          name: 'John Brown jr.',
-          age: 30,
-          address: 'New York No. 3 Lake Park',
-          children: [{
-            key: 121,
-            name: 'Jimmy Brown',
-            age: 16,
-            address: 'New York No. 3 Lake Park',
-          }],
-        }, {
-          key: 13,
-          name: 'Jim Green sr.',
-          age: 72,
-          address: 'London No. 1 Lake Park',
-          children: [{
-            key: 131,
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 2 Lake Park',
-            children: [{
-              key: 1311,
-              name: 'Jim Green jr.',
-              age: 25,
-              address: 'London No. 3 Lake Park',
-            }, {
-              key: 1312,
-              name: 'Jimmy Green sr.',
-              age: 18,
-              address: 'London No. 4 Lake Park',
-            }],
-          }],
-        }],
-      }, {
-        key: 2,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-      }];
-      
-    //   rowSelection objects indicates the need for row selection
-      const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        onSelect: (record, selected, selectedRows) => {
-          console.log(record, selected, selectedRows);
-        },
-        onSelectAll: (selected, selectedRows, changeRows) => {
-          console.log(selected, selectedRows, changeRows);
-        },
-      };
-    return (
-        <Table columns={columns}  rowSelection={rowSelection} dataSource={data}></Table>
+    const data = [];
+    for (let i = 0; i < 3; ++i) {
+      data.push({
+        key: i,
+        legalName: ' Boiling Crab and Crawfish Inc',
+        dba: 'Shaking Crab',
+        taxNum: 'xxxxx',
+        contact: 'Eddie(678-xxx-xxxx)',
+        wechat: 'xxxxzxxxx',
+      });
+    }
 
+
+    
+    return (
+      <Table
+        className="components-table-demo-nested"
+        columns={columns}
+        expandedRowRender={expandedRowRender}
+        dataSource={data}
+      />
     );
   }
 }

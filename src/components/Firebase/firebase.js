@@ -19,7 +19,7 @@ class Firebase {
   }
 
   // create api here
-  companies = (componentId) => this.db.collection('companies').get().then(snapshot => {
+  companies = (componentId) => this.db.collection('test').get().then(snapshot => {
     snapshot.forEach(doc => {
       console.log(doc.id, '=>', doc.data());
     })
