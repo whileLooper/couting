@@ -40,8 +40,6 @@ export class RegistrationForm extends React.Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -64,13 +62,6 @@ export class RegistrationForm extends React.Component {
         },
       },
     };
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '+1',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="+1">+1</Option>
-      </Select>
-    );
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
