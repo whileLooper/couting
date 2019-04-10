@@ -19,9 +19,11 @@ class Firebase {
   }
 
   // create api here
-  companies = (componentId) => this.db.collection('test').doc('123').get().then(doc => {
-    console.log(doc.data());
-  })
+  companies = (componentId) => this.db.collection('companies').get().then(snapshot => {
+    snapshot.forEach(doc => {
+      console.log(doc.id, '=>', doc.data());
+    })
+  });
 
   submitForm = (input) => this.db.ref('/companies').set({
     // mapping different input properties
