@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Input, Button, Icon, InputNumber, Form } from "antd";
+import { Row, Col, Input, Button, Select } from "antd";
 
 export default class EmployeeForm extends React.Component {
   constructor(props) {
