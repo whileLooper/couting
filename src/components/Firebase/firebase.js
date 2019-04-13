@@ -19,10 +19,8 @@ class Firebase {
   }
 
   // getting company infor
-  companies = (componentId) => this.db.collection('test').doc('123').onSnapshot(function(doc) {
-    console.log("Current data: ", doc.data());
-});
-
+  companies = (componentId) => this.db.collection('payroll').doc('company1');
+  
   submitForm = (formValues) => this.db.collection('payrolls').doc('companyID1').set(formValues);
 
   getFormByComponent = (componentId) => this.db.ref(`/companies/${componentId}`);
