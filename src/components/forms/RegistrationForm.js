@@ -4,12 +4,11 @@ import {
   Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Divider, 
 } from 'antd'; 
 import EmployeeForm from './AddEmployee';
-import { FirebaseContext } from 'Component/Firebase';
 
 const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 export class RegistrationForm extends React.Component {
+
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
@@ -19,46 +18,28 @@ export class RegistrationForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const formValue = this.formatFormValue(values);
+        // dispath firebase set data function here
+        this.props.firebase.submitForm(formValue);
       }
     });
   }
 
-  handleConfirmBlur = (e) => {
-    const value = e.target.value;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  }
-
-  compareToFirstPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
-  }
-
-  validateToNextPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
-  }
-
-  handleWebsiteChange = (value) => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-    }
-    this.setState({ autoCompleteResult });
+  // convert form object into array base on employee id
+  formatFormValue = (values) => {
+    let employeeMap = {};
+    Object.keys(values).forEach(id => {
+      const index = id.split('_')[1];
+      employeeMap[index] = {
+        name: values[`employee_${index}_name`],
+        baseSalary: values[`employee_${index}_baseSalary`],
+        baseTips: values[`employee_${index}_baseTips`],
+      }
+    });
+    return employeeMap;
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -81,13 +62,6 @@ export class RegistrationForm extends React.Component {
         },
       },
     };
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '+1',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="+1">+1</Option>
-      </Select>
-    );
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
@@ -116,9 +90,7 @@ export class RegistrationForm extends React.Component {
         >
           XXXX
         </Form.Item>
-        <FirebaseContext.Consumer>
-          {(firebase) => <EmployeeForm firebase={firebase} />}
-        </FirebaseContext.Consumer>
+        <EmployeeForm {...this.props} />
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">提交</Button>
         </Form.Item>
