@@ -18,13 +18,9 @@ class Firebase {
     this.db = app.firestore();
   }
 
-  // create api here
-  companies = (componentId) => this.db.collection('test').get().then(snapshot => {
-    snapshot.forEach(doc => {
-      console.log(doc.id, '=>', doc.data());
-    })
-  });
-
+  // getting company infor
+  companies = (componentId) => this.db.collection('payroll').doc('company1');
+  
   submitForm = (formValues) => this.db.collection('payrolls').doc('companyID1').set(formValues);
 
   getFormByComponent = (componentId) => this.db.ref(`/companies/${componentId}`);
