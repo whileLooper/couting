@@ -1,39 +1,36 @@
 import React from 'react';
-import {
-  Form,Table, Badge, Menu, Dropdown, Icon
-} from 'antd';
+import { Form,Table, Badge, Menu, Dropdown, Input, } from 'antd';
+import { FirebaseContext } from 'Component/Firebase';
+
 
 export class AccountingPage extends React.Component {
-  
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      company: [],
+      employeeList: [],
+    };
+  }
 
   render() {
-    const menu = (
-      <Menu>
-        <Menu.Item>
-          Action 1
-        </Menu.Item>
-        <Menu.Item>
-          Action 2
-        </Menu.Item>
-      </Menu>
-    );
+    
+    const Search = Input.Search;
 
-    const expandedRowRender = () => {
+    // const inputCompaniesId = () => {
+    //   this.props.firebase.companies();
+  
+    // }
+ 
+    const expandedRowRender = (record) => {
+
       const columns = [
         { title: '姓名', dataIndex: 'name', key: 'name' },
         { title: '底薪', dataIndex: 'baseSalary', key: 'baseSalary' },
         { title: '小费', dataIndex: 'tips', key: 'tips' },
       ];
-  
       const data = [];
-      for (let i = 0; i < 3; ++i) {
-        data.push({
-          key: i,
-          name: 'John Doe',
-          baseSalary: '123.00',
-          tips: '59.05',
-        });
-      }
+
       return (
         <Table
           columns={columns}
@@ -53,26 +50,39 @@ export class AccountingPage extends React.Component {
     ];
 
     const data = [];
-    for (let i = 0; i < 3; ++i) {
-      data.push({
-        key: i,
-        legalName: ' Boiling Crab and Crawfish Inc',
-        dba: 'Shaking Crab',
-        taxNum: 'xxxxx',
-        contact: 'Eddie(678-xxx-xxxx)',
-        wechat: 'xxxxzxxxx',
-      });
-    }
-
-
+    // for (let i = 0; i < 2; ++i) {
+    //   data.push({
+    //     key: i,
+    //     legalName: ' Boiling Crab and Crawfish Inc',
+    //     dba: 'Shaking Crab',
+    //     taxNum: 'xxxxx',
+    //     contact: 'Eddie(678-xxx-xxxx)',
+    //     wechat: 'xxxxzxxxx',
+    //   });
+    // }
     
     return (
-      <Table
-        className="components-table-demo-nested"
-        columns={columns}
-        expandedRowRender={expandedRowRender}
-        dataSource={data}
-      />
+
+
+      <div>
+      {/* <FirebaseContext.Consumer>
+      {(firebase) => < AccountingPage firebase={firebase} />}
+      </FirebaseContext.Consumer> */}
+        <Search
+        placeholder="input tax number"
+        // onSearch={value => inputCompaniesId()}
+        size="large"
+        style={{ width: 200 }}
+        enterButton
+        />
+        <br /><br />
+        <Table
+          className="components-table-demo-nested"
+          columns={columns}
+          expandedRowRender={expandedRowRender}
+          dataSource={data}
+        />
+      </div>
     );
   }
 }
