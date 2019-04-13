@@ -1,11 +1,12 @@
 import React from "react";
-import { Row, Col, Input, Button, Icon, InputNumber, Form } from "antd";
-
+import { Row, Col, Input, Button, Select } from "antd";
+const Option = Select.Option;
 export default class EmployeeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      employeeList: []
+      employeeList: [],
+      monthList: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
     };
   }
 
@@ -19,7 +20,6 @@ export default class EmployeeForm extends React.Component {
 
   handleAddEmployee = () => {
     const { employeeList } = this.state;
-    // console.log(+(employeeList[employeeList.length - 1].split('_')[1]) + 1);
     const newIndex = +(employeeList[employeeList.length - 1].split('_')[1]) + 1;
     employeeList.push(`employee_${newIndex}`);
 
@@ -36,6 +36,10 @@ export default class EmployeeForm extends React.Component {
       employeeList: filtered
     });
   };
+
+  handleMonthSelect = () => {
+
+  }
 
   addButton = () => {
     return (
@@ -54,7 +58,7 @@ export default class EmployeeForm extends React.Component {
   };
 
   render() {
-    const { employeeList } = this.state;
+    const { employeeList, monthList } = this.state;
     const length = employeeList.length;
     const { getFieldDecorator } = this.props.form;
 
@@ -90,12 +94,13 @@ export default class EmployeeForm extends React.Component {
 
     return (
       <div>
-        {/* <Row type="flex" justify="space-between">
-          <Col span={2} />
-          <Col span={8}>姓名</Col>
-          <Col span={7}>底薪</Col>
-          <Col span={7}>小费</Col>
-        </Row> */}
+        <Row type="flex" justify="center">
+          <Select defaultValue="四月" style={{ width: 100, marginBottom: 20 }} onChange={this.handleMonthSelect()}>
+            {monthList.map((month) => (
+              <Option value={month}>{month}</Option>
+            ))}
+          </Select>
+        </Row>
         {employeeRows}
         {this.addButton()}
       </div>
