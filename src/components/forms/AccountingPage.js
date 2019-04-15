@@ -15,6 +15,7 @@ export class AccountingPage extends React.Component {
   }
 
   componentDidMount = () => {
+    console.log('did mount');
     this.props.firebase.companies()
     .onSnapshot((doc) => {
       console.log(doc.data());
@@ -26,6 +27,7 @@ export class AccountingPage extends React.Component {
   
 
   render() {
+    console.log('rendering...');
     const { payroll } = this.state;
     const monthList = [];
     if (payroll) {
