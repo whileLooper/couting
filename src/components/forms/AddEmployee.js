@@ -1,87 +1,107 @@
-import React from 'react';
-import { Row, Col, Input, Button } from 'antd';
-
-
+import React from "react";
+import { Row, Col, Input, Button, Select } from "antd";
+const Option = Select.Option;
 export default class EmployeeForm extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       employeeList: [],
+      monthList: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
     };
   }
 
   componentDidMount = () => {
     const { employeeList } = this.state;
-    employeeList.push(this.newRow());
+    employeeList.push(`employee_${employeeList.length}`);
     this.setState({
-      employeeList: employeeList,
+      employeeList: employeeList
     });
-  }
-  
-  newRow = () => {
+  };
+
+  handleAddEmployee = () => {
     const { employeeList } = this.state;
+    const newIndex = +(employeeList[employeeList.length - 1].split('_')[1]) + 1;
+    employeeList.push(`employee_${newIndex}`);
+
+    this.setState({
+      employeeList: employeeList
+    });
+  };
+
+  handleDeleteEmployee = (event) => {
+    const key = event.target.getAttribute("id");
+    let { employeeList } = this.state;
+    let filtered = employeeList.filter((val) => val !== key);
+    this.setState({
+      employeeList: filtered
+    });
+  };
+
+  handleMonthSelect = () => {
+
+  }
+
+  addButton = () => {
     return (
-      <Row key={`row_id_${employeeList.length}`} style={{marginBottom: '10px'}} gutter={4} type="flex" justify="space-between">
-        <Col span={2}>
+      <Row type="flex" justify="space-between">
+        <Col span={24}>
           <Button
-            id={`row_id_${employeeList.length}`}
+            style={{ width: "100%" }}
+            type="dashed"
+            onClick={() => this.handleAddEmployee()}
+          >
+            添加员工
+          </Button>
+        </Col>
+      </Row>
+    );
+  };
+
+  render() {
+    const { employeeList, monthList } = this.state;
+    const length = employeeList.length;
+    const { getFieldDecorator } = this.props.form;
+
+    const employeeRows = employeeList.map((id) => (
+      <Row
+        key={id}
+        style={{ marginBottom: "10px" }}
+        gutter={4}
+        type="flex"
+        justify="space-between"
+      >
+        <Col span={2}>
+          {length <= 1 ? null : <Button
+            id={id}
             type="danger"
             shape="circle"
             icon="minus"
             size="small"
             onClick={(event) => this.handleDeleteEmployee(event)}
-          />
+          />}
         </Col>
-        <Col span={10}><Input /></Col>
-        <Col span={6}><Input /></Col>
-        <Col span={6}><Input /></Col>
-        {/* <Col span={4}><Input /></Col> */}
-      </Row>
-    )
-  }
-  
-  handleAddEmployee = () => {
-    const { employeeList } = this.state;
-    employeeList.push(this.newRow());
-
-    this.setState({
-      employeeList: employeeList,
-    })
-  }
-
-  handleDeleteEmployee = (event) => {
-    const key = event.target.getAttribute('id');
-    let { employeeList } = this.state;
-    let filtered = employeeList.filter((val) => val.key !== key);
-    this.setState({
-      employeeList: filtered,
-    });
-  }
-  
-  addButton = () => {
-    return (
-      <Row type="flex" justify="space-between">
-        <Col span={24}>
-          <Button style={{width: '100%'}} type="dashed" onClick={() => this.handleAddEmployee()}>添加员工</Button>
+        <Col span={8}>
+          {getFieldDecorator(`${id}_name`, {})(<Input placeholder="员工姓名" />)}
+        </Col>
+        <Col span={7}>
+          {getFieldDecorator(`${id}_baseSalary`, {})( <Input placeholder="底薪" /> )}
+        </Col>
+        <Col span={7}>
+          {getFieldDecorator(`${id}_baseTips`, {})(<Input placeholder="小费" />)}
         </Col>
       </Row>
-    )
-  }
-
-  render() {
-    const { employeeList } = this.state;
-    this.props.firebase.companies();
+    ));
 
     return (
       <div>
-        <Row type="flex" justify="space-between">
-          <Col span={2}></Col>
-          <Col span={10}>姓名</Col>
-          <Col span={6}>底薪</Col>
-          <Col span={6}>小费</Col>
+        <Row type="flex" justify="center">
+          <Select defaultValue="四月" style={{ width: 100, marginBottom: 20 }} onChange={this.handleMonthSelect()}>
+            {monthList.map((month) => (
+              <Option value={month}>{month}</Option>
+            ))}
+          </Select>
         </Row>
-        {employeeList.map(val => val)}
+        {employeeRows}
         {this.addButton()}
       </div>
     );

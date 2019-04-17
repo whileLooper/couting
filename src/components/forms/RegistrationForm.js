@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  // eslint-disable-next-line
-  Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Divider, 
-} from 'antd'; 
+import { Form, Modal, Button, Card, Row, Typography, Icon } from 'antd'; 
 import EmployeeForm from './AddEmployee';
-import { FirebaseContext } from 'Component/Firebase';
-
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
+const { Text } = Typography;
 
 export class RegistrationForm extends React.Component {
   state = {
@@ -15,60 +9,54 @@ export class RegistrationForm extends React.Component {
     autoCompleteResult: [],
   };
 
+  success = () => {
+    Modal.success({
+      title: '成功提交！',
+      content: '我们会尽快对您提交的表格进行处理， 谢谢～',
+    });
+  };
+
+  error = () => {
+    Modal.error({
+      title: '出错啦😱',
+      content: '请重新提交表格，或者联系我们。抱歉～',
+    });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const formValue = this.formatFormValue(values);
+        this.props.firebase.submitForm(formValue)
+        .then(() => {
+            this.success();
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+        })
+        .catch((error) => {
+          this.error();
+        });
       }
     });
   }
 
-  handleConfirmBlur = (e) => {
-    const value = e.target.value;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  }
-
-  compareToFirstPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
-  }
-
-  validateToNextPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
-  }
-
-  handleWebsiteChange = (value) => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-    }
-    this.setState({ autoCompleteResult });
+  // convert form object into array base on employee id
+  formatFormValue = (values) => {
+    let employeeMap = {};
+    Object.keys(values).forEach(id => {
+      const index = id.split('_')[1];
+      employeeMap[index] = {
+        name: values[`employee_${index}_name`],
+        baseSalary: values[`employee_${index}_baseSalary`],
+        baseTips: values[`employee_${index}_baseTips`],
+      }
+    });
+    return employeeMap;
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
     const tailFormItemLayout = {
       wrapperCol: {
         xs: {
@@ -77,50 +65,43 @@ export class RegistrationForm extends React.Component {
         },
         sm: {
           span: 16,
-          offset: 8,
+          offset: 4,
         },
+        lg: {
+          span: 16,
+          offset: 4,
+        }
       },
     };
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '+1',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="+1">+1</Option>
-      </Select>
-    );
 
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item
-          label="公司名称(Legal name)"
-        >
-           Boiling Crab and Crawfish Inc
-        </Form.Item>
-        <Form.Item
-          label="公司招牌名字(DBA)"
-        >
-         Shaking Crab
-        </Form.Item>
-        <Form.Item
-          label="公司税号"
-        >
-          XXXXXXX
-        </Form.Item>
-        <Form.Item
-          label="联系信息"
-        >
-          Eddie(678-XXX-XXXX)
-        </Form.Item>
-        <Form.Item
-          label="微信号"
-        >
-          XXXX
-        </Form.Item>
-        <FirebaseContext.Consumer>
-          {(firebase) => <EmployeeForm firebase={firebase} />}
-        </FirebaseContext.Consumer>
+      <Form onSubmit={this.handleSubmit}>
+        <Row type="flex" justify="center">
+          <Card
+            size="small"
+            title="Boiling Crab and Crawfish Inc"
+            style={{ width: 350, marginBottom: 20, textAlign: 'center' }}
+          >
+            <p>
+              <Text disabled><Icon type="bank" /></Text> <Text strong>Shaking Crab</Text>
+            </p>
+            <p>
+              <Text disabled><Icon type="money-collect" /></Text> <Text strong>xxxx-xxxx</Text>
+            </p>
+            <p>
+              <Text disabled><Icon type="contacts" /></Text> <Text strong>Eddie</Text>
+            </p>
+            <p>
+              <Text disabled><Icon type="phone" /></Text> <Text strong>xxx-xxx-xxxx</Text>
+            </p>
+            <p>
+              <Text disabled><Icon type="wechat" /></Text> <Text strong>xxx-xxx-xxxx</Text>
+            </p>
+          </Card>
+        </Row>
+        <EmployeeForm {...this.props} />
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">提交</Button>
+          <Button block type="primary" htmlType="submit" style={{marginTop: 30}}>提交</Button>
         </Form.Item>
       </Form>
     );
